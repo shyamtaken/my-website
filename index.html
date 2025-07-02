@@ -4,7 +4,7 @@
   <title>Shyamtaken Web</title>
 </head>
   <body style="background-color: lightblue;">
-<!-- Fixed Sidebar -->
+<!-- Fixed Scrollable Sidebar -->
 <div style="
   width: 100px;
   height: 100vh;
@@ -14,19 +14,20 @@
   background-color: #f0f0f0;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-  ">
+  overflow-y: auto;
+">
   <h1>More</h1>
-  <h1><a href="https://shyamtaken.github.io/my-website/about.html">About</a><br></h1>
-  <h1><a href="https://shyamtaken.github.io/my-website/index.html">Home</a><br></h1>
-  <h1><a href="https://shyamtaken.github.io/my-website/Reply.html">Reply</a><br></h1>
-  <h1><a href="https://shyamtaken.github.io/my-website/DAVbooks.html">DAV Books</a></h1><br>
-  <h1><a href="https://shyamtaken.github.io/my-website/DavQA.html">DAV Q/A</a></h1><br>
-   <h1><a href="https://shyamtaken.github.io/my-website/Pomodoro%20Timer.html">Pomodoro Timer</a></h1>
-   <h1><a href="https://shyamtaken.github.io/my-website/Motivation.html">Motivation</a></h1>
-  <h1><a href="">Contact</a><br></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/about.html">About</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/index.html">Home</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/Reply.html">Reply</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/DAVbooks.html">DAV Books</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/DavQA.html">DAV Q/A</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/Pomodoro%20Timer.html">Pomodoro Timer</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/Motivation.html">Motivation</a></h1>
+  <h1><a href="">Contact</a></h1>
 </div>
 <!-- Main Content -->
- <div style="margin-left: 220px; padding: 20px;">
+ <div style="margin-left: 120px; padding: 20px;">
      <img src="https://i.ibb.co/4R55jDWN/IMG-20221223-WA0048-101926.jpg" width="500" height="600">
   <strong><h1>Welcome to Shyam's Web</h1></strong>
   <script>
@@ -190,35 +191,6 @@
     color: #eee;
   }
 </style>
-<h2>Today's Motivational Quote</h2>
-<p id="dailyQuote"></p>
-
-<script>
-  const quotes = [
-    "Believe in yourself and all that you are.",
-    "Success is the sum of small efforts repeated day in and day out.",
-    "Every expert was once a beginner.",
-    "Learning never exhausts the mind.",
-    "Dream big and dare to fail.",
-    "Stay curious and keep exploring.",
-    "You are capable of amazing things.",
-    "Discipline is the bridge between goals and accomplishment.",
-    "Do something today that your future self will thank you for.",
-    "The best way to predict the future is to create it."
-  ];
-
-  // Get the day number in the year (0-364)
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now - start;
-  const oneDay = 1000 * 60 * 60 * 24;
-  const dayOfYear = Math.floor(diff / oneDay);
-
-  // Use modulo to loop through quotes
-  const quoteIndex = dayOfYear % quotes.length;
-  document.getElementById("dailyQuote").innerText = quotes[quoteIndex];
-</script>
-
   <h1>YouTube Channels:</h1>
   <a href="https://youtube.com/@shyamtaken?si=NlReD5BtJxMxJF9V">Shyamtaken</a><br><br>
   <a href="https://youtube.com/@shyamdipa143?si=05TtsVYx8FmDMjwA">Shyam_053</a><br><br>
@@ -228,11 +200,12 @@
 <a href="https://youtu.be/8Mm0Wg9id3A?si=csnbQBB6QKGi4Mr-"> Focus To-Do App Tutorial – Stay Productive with Pomodoro!</a><br><br>
 <a href="https://youtu.be/khsQQRhUV1c?si=G-0nY_Tz5KybFVYQ">How to Use YouTube on Laptop & Add It to Desktop | Beginner Friendly Guide (2025)
 </a><br><br>
+<h2>Apps and games that I made</h2>
+<h3><a href="https://focus-on.glide.page/">Focus-on</a>
+<a href="https://shyamtaken.github.io/my-website/Ludicrous%20Line%20(3d%20racing%20game)-1_0_1%20(1).apk">Racing Game</a></h3>
 <h2>My school information</h2>
 <h3>Name:Shyam Bhagat<br>Class:VII<br>Section:B<br>Roll:29<br>DOB:23/09/2012<br>Admisson NO. : 6037<br>
 School: DAV Public School Gokulpur,Pakur<br></h3>
-<h1>DAV School Timetable</h1>
-<img src="https://i.ibb.co/dsjFZGn9/capture-250627-111321.png">
 <h2>DAV Class 7 E-Books</h2>
 <h2><a href="https://drive.google.com/file/d/1d692qbukupUmvpH0kuXbVP__MF2DpxCU/view?usp=drive_link"> Gyan Sagar</a><br><br>
 <a href="https://drive.google.com/file/d/1wnbV8dH7iD-BnSYUZFWhxnRbDtcVu-uf/view?usp=drive_link">     Abhyas Sagar</a><br><br>
