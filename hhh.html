@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shyamtaken Web</title>
+</head>
+  <body style="background-color: lightblue;">
+<!-- Fixed Scrollable Sidebar -->
+<div style="
+  width: 100px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  overflow-y: auto;
+">
+  <h1>More</h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/about.html">About</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/index.html">Home</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/DAVbooks.html">DAV Books</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/DavQA.html">DAV Q/A</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/Pomodoro%20Timer.html">Pomodoro Timer</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/Motivation.html">Motivation</a></h1>
+  <h1><a href="https://shyamtaken.github.io/my-website/Contact.html">Contact</a></h1>
+<h1><a href="https://www.chatbase.co/chatbot-iframe/uEwEUoKHFxZZVuWtOc-Ik">ShyamAI</a></h1>
+</div>
+<!-- Main Content -->
+ <div style="margin-left: 120px; padding: 20px;">
+     <img src="https://i.ibb.co/4R55jDWN/IMG-20221223-WA0048-101926.jpg" width="500" height="600">
+  <strong><h1>Welcome to Shyam's Web</h1></strong>
+  <script>
+  document.write("Current Date and Time: " + new Date().toLocaleString());
+</script>
+  <h2>I am a DAV Student</h2>
+  <button onclick="toggleDarkMode()">White Text</button>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Daily Fun Fact</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f0f8ff;
+      text-align: center;
+    }
+    .fact {
+      font-size: 1.5em;
+      background: #fff8dc;
+      padding: 20px;
+      border: 2px solid #eee;
+      border-radius: 8px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <h1> Fun Fact of the Day </h1>
+  <div class="fact" id="fact"></div>
+
+  <script>
+    // List of 10 fun facts
+    const facts = [
+  "Honey never spoils.",
+"Bananas are berries, but strawberries are not.",
+"A group of flamingos is called a 'flamboyance.'",
+"Octopuses have three hearts.",
+"There are more stars in the universe than grains of sand on Earth.",
+"A day on Venus is longer than a year on Venus.",
+"Wombat poop is cube-shaped.",
+"Butterflies taste with their feet.",
+"Scotland’s national animal is the unicorn.",
+"Koalas have fingerprints almost identical to humans.",
+"Hot water freezes faster than cold water under certain conditions.",
+"The Eiffel Tower can grow up to 6 inches during summer heat.",
+"A bolt of lightning is five times hotter than the surface of the Sun.",
+"Sloths can hold their breath longer than dolphins.",
+"Some cats are allergic to humans.",
+"The longest time between two twins being born is 87 days.",
+"Sharks existed before trees.",
+"A snail can sleep for up to three years.",
+"An ostrich’s eye is bigger than its brain.",
+"Cows have best friends.",
+"The shortest war in history lasted 38 minutes.",
+"There are more fake flamingos in the world than real ones.",
+"The dot over the lowercase 'i' is called a tittle.",
+"The hashtag symbol is technically called an octothorpe.",
+"Sea otters hold hands while sleeping so they don’t drift apart.",
+"The longest English word without a vowel is 'rhythms.'",
+"The heart of a shrimp is located in its head.",
+"Elephants can’t jump.",
+"The unicorn is the national animal of Scotland.",
+"Humans share 50% of their DNA with bananas.",
+"The first alarm clock could only ring at 4 a.m.",
+"Alaska is the state with the highest percentage of people who walk to work.",
+"A jiffy is an actual unit of time: 1/100th of a second.",
+"The inventor of the frisbee was turned into a frisbee after he died.",
+"A group of porcupines is called a prickle.",
+"A bolt of lightning contains enough energy to toast 100,000 slices of bread.",
+"The longest hiccuping spree lasted 68 years.",
+"Your taste buds have a lifespan of about 10–14 days.",
+"Peanuts are not nuts—they’re legumes.",
+"Venus spins in the opposite direction to most planets.",
+"A group of crows is called a murder.",
+"The first computer mouse was made of wood.",
+"Kangaroos can’t walk backward.",
+"The tongue is the strongest muscle relative to its size.",
+"Humans are the only animals that blush.",
+"The hashtag symbol (#) was originally called a pound sign.",
+"Some turtles can breathe through their butts.",
+"Cats have fewer toes on their back paws.",
+"Octopuses have blue blood.",
+"One quarter of the bones in your body are in your feet.",
+"Polar bear skin is actually black.",
+"Goats have rectangular pupils.",
+"Chewing gum while cutting onions can help keep you from crying.",
+"Human saliva contains a painkiller called opiorphin.",
+"The shortest complete sentence in English is 'Go.'",
+"The longest place name in the world is 85 letters long.",
+"Cleopatra lived closer in time to the Moon landing than to the building of the Great Pyramid.",
+"Newborns don’t shed tears until they are about 2 weeks old.",
+"A cloud can weigh over a million pounds.",
+"Some metals are so reactive that they explode on contact with water.",
+"A bolt of lightning can reach temperatures of 30,000 kelvins.",
+"More people are allergic to cow’s milk than any other food.",
+"There are more stars in the universe than grains of sand on all the world’s beaches.",
+"Horses can’t vomit.",
+"The human nose can detect over 1 trillion smells.",
+"Rabbits can’t vomit.",
+"The longest word you can type with your left hand only is 'stewardesses.'",
+"Butterflies can see ultraviolet light.",
+"The Twitter bird has a name: Larry.",
+"A crocodile cannot stick its tongue out.",
+"Armadillo shells are bulletproof.",
+"Most wasabi is actually colored horseradish.",
+"Human thigh bones are stronger than concrete.",
+"The word 'nerd' was first coined by Dr. Seuss.",
+"A shrimp’s heart is in its head.",
+"Pineapples take about two years to grow.",
+"Blue whales are the largest animals to have ever existed.",
+"The word 'set' has the highest number of definitions in English.",
+"The dot on the 'i' and 'j' is called a tittle.",
+"The longest time a chicken has flown is 13 seconds.",
+"The electric chair was invented by a dentist.",
+"The original London Bridge is now in Arizona.",
+"Rats laugh when tickled.",
+"Koalas sleep up to 22 hours a day.",
+"A snail can have up to 14,000 teeth.",
+"Venus is the only planet that rotates clockwise.",
+"Sharks are immune to almost all known diseases.",
+"The first oranges weren’t orange—they were green.",
+"Some frogs can be frozen solid and survive.",
+"The shortest commercial flight lasts just 57 seconds.",
+"The unicorn is also a symbol of purity and innocence.",
+"The average person walks the equivalent of five times around the world in their lifetime.",
+"Recycling one glass jar saves enough energy to watch TV for 3 hours.",
+"Camels have three eyelids to protect themselves from blowing sand.",
+"Some hummingbirds weigh less than a penny.",
+"Rain has a smell, called petrichor.",
+"The word 'queue' is just a Q followed by four silent letters."
+
+    ];
+
+    // Get the current day of the year (0-364)
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = now - start + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+
+    // Choose a fact based on the day of the year
+    const factIndex = dayOfYear % facts.length;
+
+    // Show the fact
+    document.getElementById('fact').textContent = facts[factIndex];
+  </script>
+</body>
+</html>
+
+<script>
+  function toggleDarkMode() {
+    document.body.classList.toggle('darkmode');
+  }
+</script>
+<style>
+  .darkmode {
+    background-color: #222;
+    color: #eee;
+  }
+</style>
+  <h1>YouTube Channels:</h1>
+  <a href="https://youtube.com/@shyamtaken?si=NlReD5BtJxMxJF9V">Shyamtaken</a><br><br>
+  <a href="https://youtube.com/@shyamdipa143?si=05TtsVYx8FmDMjwA">Shyam_053</a><br><br>
+<a href="https://youtu.be/mqXXUloH23M?si=pPG8bi0O4uo8ktuT">Popular Youtube Video</a><br>
+<h3>Other videos</h3>
+<a href="https://youtu.be/Vpf5EDwNJNg?si=mpI_dL-8l0F6TWc8"> How to Make YouTube Thumbnails for Free Using Canva (Step-by-Step)</a><br><br>
+<a href="https://youtu.be/8Mm0Wg9id3A?si=csnbQBB6QKGi4Mr-"> Focus To-Do App Tutorial – Stay Productive with Pomodoro!</a><br><br>
+<a href="https://youtu.be/khsQQRhUV1c?si=G-0nY_Tz5KybFVYQ">How to Use YouTube on Laptop & Add It to Desktop | Beginner Friendly Guide (2025)
+</a><br><br>
+<h2>Apps, games and AI that I made</h2>
+<h3><a href="https://focus-on.glide.page/">Focus-on</a><br><br>
+<a href="https://shyamtaken.github.io/my-website/Ludicrous%20Line%20(3d%20racing%20game)-1_0_1%20(1).apk">Racing Game</a></h3>
+   <h3><a href="https://www.chatbase.co/chatbot-iframe/uEwEUoKHFxZZVuWtOc-Ik">Shyam AI</a></h3>
+   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "3838e4cf-794d-4423-a361-65f3627c0ba5",
+      safari_web_id: "web.onesignal.auto.49809676-9f7f-4916-aef3-fd94958742a1",
+      notifyButton: {
+        enable: true,
+      },
+    });
+  });
+</script>
+<h2>My school information</h2>
+<h3>Name:Shyam Bhagat<br>Class:VII<br>Section:B<br>Roll:29<br>DOB:23/09/2012<br>Admisson NO. : 6037<br>
+School: DAV Public School Gokulpur,Pakur<br></h3>
+<h2>DAV Class 7 E-Books</h2>
+<h2><a href="https://drive.google.com/file/d/1d692qbukupUmvpH0kuXbVP__MF2DpxCU/view?usp=drive_link"> Gyan Sagar</a><br><br>
+<a href="https://drive.google.com/file/d/1wnbV8dH7iD-BnSYUZFWhxnRbDtcVu-uf/view?usp=drive_link">     Abhyas Sagar</a><br><br>
+<a href="https://drive.google.com/file/d/1uZewPpmo2SSAgih_GWrT44tjLLCKHgsA/view?usp=drive_link">     English Reader</a><br><br>
+<a href="https://drive.google.com/file/d/17eugbyjc9KPrvieHrH0mtJFRKkwD6nlE/view?usp=drive_link">     English Practice</a><br><br>
+<a href="https://drive.google.com/file/d/1FZ0FJaRybOJJbUiWC0vO8w4Mgg_VTSWT/view?usp=drive_link">     English Literature</a><br><br>
+<a href="https://drive.google.com/file/d/1Q06-FBeksI9gh4bX8dSKw1M6GlStABga/view?usp=drive_link">     Social Science</a><br><br>
+<a href="https://drive.google.com/file/d/1Q06-FBeksI9gh4bX8dSKw1M6GlStABga/view?usp=drive_link">     Science</a><br><br>
+<a href="https://drive.google.com/file/d/1JDDh-lNmvqlkVCQoW-Q3SB25gHGRVubm/view?usp=drive_link">     Sanskrit</a><br><br>
+<a href="https://drive.google.com/file/d/1rPfkwz3ygKJKeOBNDyy6zZrSrfwz7PzJ/view?usp=drive_link">     General Knowledge</a><br><br></h2>
+
+
+
+
+</div>
+</body>
+</html>

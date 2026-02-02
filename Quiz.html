@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Quiz / MCQ Generator</title>
+<style>
+        body { font-family: Arial, sans-serif; background:#f4f4f9; text-align:center; padding:20px; }
+    .quiz-container { max-width:600px; margin:auto; background:white; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.2); }
+    .question { font-size:18px; margin-bottom:15px; }
+    .options button {
+      display:block; width:100%; margin:8px 0; padding:10px; border:none;
+      border-radius:8px; background:#e0e0e0; cursor:pointer; font-size:16px;
+    }
+    .options button:hover { background:#d4d4d4; }
+    .correct { background:#4CAF50 !important; color:white; }
+    .wrong { background:#f44336 !important; color:white; }
+    #nextBtn { margin-top:15px; padding:10px 20px; border:none; border-radius:8px; background:#007bff; color:white; cursor:pointer; display:none; }
+    #nextBtn:hover { background:#0056b3; }
+
+  :root{--bg:#0f172a;--card:#111827;--mut:#9ca3af;--txt:#e5e7eb;--pri:#3b82f6;--ok:#10b981;--err:#ef4444}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:Segoe UI,system-ui,Arial,sans-serif}
+  .wrap{max-width:980px;margin:40px auto;padding:0 16px}
+  h1{margin:0 0 14px} .sub{color:var(--mut);margin-bottom:18px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px} @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  input[type="text"],textarea,select{width:100%;padding:10px;border-radius:10px;border:1px solid #334155;background:#0b1220;color:var(--txt)}
+  textarea{min-height:80px;resize:vertical}
+  .btn{cursor:pointer;border:none;border-radius:10px;padding:10px 14px;font-weight:600}
+  .pri{background:var(--pri);color:#fff} .ghost{background:#1f2937;color:#e5e7eb;border:1px solid #334155}
+  .ok{background:var(--ok);color:#062c22} .bad{background:var(--err)}
+  .list{display:grid;gap:8px;margin-top:8px}
+  .qitem{border:1px solid #243042;border-radius:12px;padding:10px;background:#0b1220}
+  .small{font-size:12px;color:var(--mut)}
+  .pill{font-size:12px;border:1px solid #334155;padding:4px 8px;border-radius:999px;background:#0b1220}
+  .opts{display:grid;gap:6px;margin-top:8px}
+  .opt{display:flex;gap:8px;align-items:center;background:#0a1020;border:1px solid #2a3447;border-radius:10px;padding:8px}
+  .opt input[type="radio"]{accent-color:var(--pri)}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+  .split{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+  .hidden{display:none} .center{text-align:center}
+  .answer.correct{border-color:var(--ok)} .answer.wrong{border-color:var(--err)}
+  .score{font-size:22px;margin:8px 0}
+  .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, monospace;background:#0b1220;border:1px solid #2a3447;padding:2px 6px;border-radius:6px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Quiz / MCQ Generator</h1>
+  <div class="sub">Build a bank of questions, then run a quiz. Data persists in your browser.</div>
+
+  <div class="grid">
+    <!-- Builder -->
+    <div class="card">
+      <h3>Create / Edit Question</h3>
+      <div class="row">
+        <input id="qText" type="text" placeholder="Question text" />
+      </div>
+      <div class="row">
+        <input id="opt1" type="text" placeholder="Option A" />
+        <input id="opt2" type="text" placeholder="Option B" />
+      </div>
+      <div class="row">
+        <input id="opt3" type="text" placeholder="Option C" />
+        <input id="opt4" type="text" placeholder="Option D" />
+      </div>
+      <div class="row">
+        <select id="correct">
+          <option value="0">Correct: A</option>
+          <option value="1">Correct: B</option>
+          <option value="2">Correct: C</option>
+          <option value="3">Correct: D</option>
+        </select>
+        <input id="topic" type="text" placeholder="Topic / Tag (optional)" />
+        <input id="points" type="text" placeholder="Points (default 1)" />
+      </div>
+      <div class="toolbar">
+        <button class="btn pri" id="saveQ">Save Question</button>
+        <button class="btn ghost" id="clearForm">Clear</button>
+      </div>
+      <div class="small">Tip: <span class="kbd">Ctrl+S</span> saves the form quickly.</div>
+
+      <hr style="border-color:#243042;margin:16px 0">
+      <div class="split">
+        <h3 style="margin:0">Question Bank</h3>
+        <div class="row" style="margin:0">
+          <button class="btn ghost" id="exportBtn">Export JSON</button>
+          <label class="btn ghost" for="importFile">Import</label>
+          <input id="importFile" type="file" accept="application/json" class="hidden" />
+          <button class="btn bad" id="wipe">Wipe</button>
+        </div>
+      </div>
+      <div class="row">
+        <input id="search" type="text" placeholder="Search text or #topic" />
+        <select id="filterTopic"><option value="">All topics</option></select>
+      </div>
+      <div id="bank" class="list"></div>
+    </div>
+
+    <!-- Runner -->
+    <div class="card">
+      <h3>Run Quiz</h3>
+      <div class="row">
+        <select id="runTopic"><option value="">All topics</option></select>
+        <input id="limit" type="text" placeholder="Number of questions (blank = all)" />
+        <select id="shuffle">
+          <option value="both">Shuffle questions + options</option>
+          <option value="qonly">Shuffle questions only</option>
+          <option value="none">No shuffle</option>
+        </select>
+        <select id="timerSel">
+          <option value="0">No timer</option>
+          <option value="15">15s per Q</option>
+          <option value="30" selected>30s per Q</option>
+          <option value="60">60s per Q</option>
+        </select>
+      </div>
+      <div class="toolbar">
+        <button class="btn pri" id="start">Start Quiz</button>
+        <button class="btn ghost" id="stop" disabled>Stop</button>
+      </div>
+
+      <div id="quizArea" class="hidden">
+        <div class="small" id="progress"></div>
+        <div style="margin:8px 0" id="timer" class="pill hidden">00:30</div>
+        <div id="qBox" class="qitem"></div>
+        <div class="toolbar">
+          <button class="btn pri" id="submitAns">Submit</button>
+          <button class="btn ghost" id="nextQ" disabled>Next</button>
+        </div>
+      </div>
+
+      <div id="resultArea" class="hidden center">
+        <div class="score" id="scoreText"></div>
+        <div id="review"></div>
+        <div class="toolbar center" style="justify-content:center">
+          <button class="btn pri" id="restart">Restart</button>
+          <button class="btn ghost" id="downloadReport">Download Report</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const els = id => document.getElementById(id);
+
+  // Storage
+  const KEY = "mcq_bank_v1";
+  const loadBank = () => JSON.parse(localStorage.getItem(KEY) || "[]");
+  const saveBank = bank => localStorage.setItem(KEY, JSON.stringify(bank));
+
+  // State
+  let bank = loadBank();
+  let editing = null;
+
+  // Elements
+  const qText = els("qText"), topic = els("topic"), points = els("points");
+  const opt = [els("opt1"), els("opt2"), els("opt3"), els("opt4")];
+  const correct = els("correct"); const bankDiv = els("bank");
+  const filterTopic = els("filterTopic"), runTopic = els("runTopic");
+  const search = els("search");
+
+  function uniqTopics() {
+    const set = new Set(bank.map(q => (q.topic||"").trim()).filter(Boolean));
+    return ["", ...Array.from(set).sort()];
+  }
+  function refreshTopicFilters(){
+    const opts = uniqTopics().map(t => `<option value="${t}">${t||"All topics"}</option>`).join("");
+    filterTopic.innerHTML = opts; runTopic.innerHTML = opts;
+  }
+
+  function clearForm(){
+    editing = null; qText.value = ""; topic.value = ""; points.value = "";
+    opt.forEach(o => o.value = ""); correct.value = "0";
+  }
+
+  function validateForm(){
+    const text = qText.value.trim();
+    const options = opt.map(o => o.value.trim());
+    if (!text) return "Question text required.";
+    if (options.some(o => !o)) return "All four options required.";
+    return null;
+  }
+
+  function renderBank(){
+    const term = search.value.trim().toLowerCase();
+    const tfilter = filterTopic.value;
+    const items = bank.filter(q => {
+      const matchText = !term || q.text.toLowerCase().includes(term) || (q.topic||"").toLowerCase().includes(term.replace("#",""));
+      const matchTopic = !tfilter || (q.topic||"") === tfilter;
+      return matchText && matchTopic;
+    });
+
+    bankDiv.innerHTML = items.map((q, idx) => {
+      const i = bank.indexOf(q);
+      return `
+        <div class="qitem">
+          <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:6px">
+            <div class="pill">${q.topic || "No topic"}</div>
+            <div class="small">Points: ${q.points||1}</div>
+          </div>
+          <div style="margin:6px 0">${q.text}</div>
+          <div class="opts">
+            ${q.options.map((o, k) => `<div class="opt ${k===q.answer?"answer":""}">
+              <input type="radio" disabled ${k===q.answer?"checked":""}/> <div>${"ABCD"[k]}. ${o}</div>
+            </div>`).join("")}
+          </div>
+          <div class="toolbar" style="margin-top:8px">
+            <button class="btn ghost" onclick="__edit(${i})">Edit</button>
+            <button class="btn bad" onclick="__del(${i})">Delete</button>
+          </div>
+        </div>`;
+    }).join("") || `<div class="small">No questions yet.</div>`;
+  }
+
+  // Expose minimal handlers to window for inline buttons
+  window.__edit = i => {
+    const q = bank[i]; editing = i;
+    qText.value = q.text; topic.value = q.topic||""; points.value = q.points||"";
+    q.options.forEach((v, k) => opt[k].value = v); correct.value = q.answer;
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  window.__del = i => { if (confirm("Delete this question?")) { bank.splice(i,1); saveBank(bank); refreshTopicFilters(); renderBank(); } };
+
+  // Save / Clear
+  els("saveQ").onclick = () => {
+    const err = validateForm(); if (err) return alert(err);
+    const q = {
+      text: qText.value.trim(),
+      options: opt.map(o => o.value.trim()),
+      answer: Number(correct.value),
+      topic: (topic.value||"").trim(),
+      points: Number(points.value || 1)
+    };
+    if (editing==null) bank.push(q); else bank[editing] = q;
+    saveBank(bank); refreshTopicFilters(); renderBank(); clearForm();
+  };
+  els("clearForm").onclick = clearForm;
+  document.addEventListener("keydown", e => { if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="s"){ e.preventDefault(); els("saveQ").click(); }});
+
+  // Search, import, export, wipe
+  search.oninput = renderBank;
+  els("exportBtn").onclick = () => {
+    const blob = new Blob([JSON.stringify(bank,null,2)], {type:"application/json"});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "quiz_bank.json"; a.click();
+    URL.revokeObjectURL(a.href);
+  };
+  els("importFile").onchange = e => {
+    const file = e.target.files[0]; if (!file) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        const arr = JSON.parse(r.result);
+        if (!Array.isArray(arr)) throw new Error("Invalid JSON");
+        bank = arr; saveBank(bank); refreshTopicFilters(); renderBank();
+      } catch(err){ alert("Import failed: " + err.message); }
+    };
+    r.readAsText(file);
+  };
+  els("wipe").onclick = () => { if (confirm("Wipe all questions?")) { bank = []; saveBank(bank); refreshTopicFilters(); renderBank(); } };
+
+  // ---------- Runner ----------
+  const startBtn = els("start"), stopBtn = els("stop"), quizArea = els("quizArea");
+  const submitBtn = els("submitAns"), nextBtn = els("nextQ"), qBox = els("qBox");
+  const progress = els("progress"), timerEl = els("timer"), resultArea = els("resultArea");
+  const scoreText = els("scoreText"), review = els("review");
+  const limit = els("limit"), shuffleSel = els("shuffle"), timerSel = els("timerSel"), restart = els("restart");
+
+  let run = null, timer = null, tLeft = 0;
+
+  function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]] } return arr; }
+
+  function buildRun(){
+    const t = els("runTopic").value;
+    let list = bank.filter(q => !t || (q.topic||"")===t);
+    if (!list.length) return null;
+
+    // copy objects to preserve original answer indices when shuffling options
+    list = list.map(q => JSON.parse(JSON.stringify(q)));
+
+    // limit
+    const n = parseInt(limit.value,10); if (!isNaN(n) && n>0) list = list.slice(0, Math.min(n, list.length));
+
+    // shuffle
+    const mode = shuffleSel.value;
+    if (mode === "both" || mode === "qonly") list = shuffle(list);
+    if (mode === "both") {
+      list.forEach(q => {
+        const paired = q.options.map((opt,i)=>({opt,i}));
+        shuffle(paired);
+        q.options = paired.map(p=>p.opt);
+        q.answer = paired.findIndex(p=>p.i===q.answer);
+      });
+    }
+    return { list, i:0, score:0, max:list.reduce((s,q)=>s+(q.points||1),0), answers:[] };
+  }
+
+  function fmtTime(s){ const m = Math.floor(s/60).toString().padStart(2,"0"); const ss = (s%60).toString().padStart(2,"0"); return `${m}:${ss}`; }
+
+  function startTimer(){
+    const per = parseInt(timerSel.value,10);
+    if (!per) { timerEl.classList.add("hidden"); return; }
+    timerEl.classList.remove("hidden");
+    tLeft = per; timerEl.textContent = fmtTime(tLeft);
+    timer = setInterval(()=>{
+      tLeft--; timerEl.textContent = fmtTime(tLeft);
+      if (tLeft<=0){ clearInterval(timer); timer=null; submitBtn.click(); }
+    },1000);
+  }
+
+  function stopTimer(){ if (timer){ clearInterval(timer); timer=null; } timerEl.classList.add("hidden"); }
+
+  function renderQ(){
+    const q = run.list[run.i];
+    progress.textContent = `Question ${run.i+1} / ${run.list.length} • Topic: ${q.topic||"—"} • ${q.points||1} pt`;
+    qBox.innerHTML = `
+      <div style="margin-bottom:8px">${q.text}</div>
+      <div class="opts">
+        ${q.options.map((o,idx)=>`
+          <label class="opt">
+            <input type="radio" name="ans" value="${idx}"> ${"ABCD"[idx]}. ${o}
+          </label>`).join("")}
+      </div>`;
+    submitBtn.disabled = false; nextBtn.disabled = true;
+    startTimer();
+  }
+
+  function showResult(){
+    quizArea.classList.add("hidden"); resultArea.classList.remove("hidden");
+    const total = run.max, score = run.score;
+    scoreText.textContent = `Score: ${score} / ${total}`;
+    review.innerHTML = run.answers.map((a,idx)=>{
+      const q = run.list[idx];
+      const corr = a.sel === q.answer;
+      return `<div class="qitem ${corr?"answer correct":"answer wrong"}" style="margin-top:8px">
+        <div class="row" style="justify-content:space-between">
+          <div>Q${idx+1}. ${q.text}</div>
+          <div class="pill">${corr?"Correct":"Wrong"}</div>
+        </div>
+        <div class="small">Your: ${a.sel==null?"(no answer)":("ABCD"[a.sel])} • Correct: ${"ABCD"[q.answer]}</div>
+      </div>`;
+    }).join("");
+    els("downloadReport").onclick = () => {
+      const blob = new Blob([JSON.stringify({date:new Date().toISOString(),score,total,answers:run.answers,questions:run.list},null,2)], {type:"application/json"});
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "quiz_result.json"; a.click();
+      URL.revokeObjectURL(a.href);
+    };
+  }
+
+  // Start / stop
+  els("start").onclick = () => {
+    run = buildRun(); if (!run) return alert("No questions available for the chosen filter.");
+    resultArea.classList.add("hidden"); quizArea.classList.remove("hidden");
+    els("stop").disabled = false; renderQ();
+  };
+  els("stop").onclick = () => { if (confirm("Stop the quiz?")) { stopTimer(); run=null; quizArea.classList.add("hidden"); } };
+  els("restart").onclick = () => { resultArea.classList.add("hidden"); };
+
+  // Submit / next
+  submitBtn.onclick = () => {
+    if (!run) return;
+    stopTimer();
+    const sel = document.querySelector('input[name="ans"]:checked');
+    const pick = sel ? Number(sel.value) : null;
+    const q = run.list[run.i];
+    const correct = pick === q.answer;
+    if (correct) run.score += (q.points||1);
+    run.answers.push({ sel: pick, correct });
+
+    // mark UI
+    const opts = Array.from(qBox.querySelectorAll(".opt"));
+    opts.forEach((el,idx)=>{
+      if (idx === q.answer) el.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--ok');
+      if (pick!=null && idx === pick && idx !== q.answer) el.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--err');
+    });
+
+    submitBtn.disabled = true; nextBtn.disabled = false;
+  };
+  nextBtn.onclick = () => {
+    if (!run) return;
+    if (run.i < run.list.length-1){ run.i++; renderQ(); }
+    else { showResult(); run=null; els("stop").disabled = true; }
+  };
+
+  // Init UI
+  refreshTopicFilters(); renderBank();
+})();
+</script>
+ <h2>🎲 Surprise Quiz</h2>
+  <div class="quiz-container" style="color: black;">
+    <div id="questionBox" class="question">Loading question...</div>
+    <div id="options" class="options"></div>
+    <button id="nextBtn">Next Question</button>
+  </div>
+
+<script>
+let quizData = [];
+let currentIndex = 0;
+
+async function loadQuiz() {
+  const res = await fetch("https://opentdb.com/api.php?amount=50&type=multiple");
+  const data = await res.json();
+  quizData = data.results;
+  currentIndex = 0;
+  showQuestion();
+}
+
+function decodeHTML(html) {
+  let txt = document.createElement("textarea");
+  txt.innerHTML = html;
+  return txt.value;
+}
+
+function showQuestion() {
+  let q = quizData[currentIndex];
+  document.getElementById("questionBox").innerText = decodeHTML(q.question);
+
+  let answers = [...q.incorrect_answers, q.correct_answer];
+  answers.sort(() => Math.random() - 0.5);
+
+  let optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  answers.forEach(ans => {
+    let btn = document.createElement("button");
+    btn.innerText = decodeHTML(ans);
+    btn.onclick = () => checkAnswer(btn, q.correct_answer);
+    optionsDiv.appendChild(btn);
+  });
+}
+
+function checkAnswer(button, correct) {
+  let buttons = document.querySelectorAll("#options button");
+  buttons.forEach(b => {
+    b.disabled = true;
+    if (b.innerText === decodeHTML(correct)) b.classList.add("correct");
+    else if (b === button) b.classList.add("wrong");
+  });
+  document.getElementById("nextBtn").style.display = "inline-block";
+}
+
+document.getElementById("nextBtn").onclick = () => {
+  currentIndex++;
+  if (currentIndex < quizData.length) {
+    showQuestion();
+    document.getElementById("nextBtn").style.display = "none";
+  } else {
+    document.getElementById("questionBox").innerText = "🎉 Quiz Over! Refresh to play again.";
+    document.getElementById("options").innerHTML = "";
+    document.getElementById("nextBtn").style.display = "none";
+  }
+};
+
+loadQuiz();
+</script>
+</body>
+</html>

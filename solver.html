@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Equation Solver</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f4f9; padding:20px; text-align:center; }
+    .solver-box {
+      max-width:500px; margin:auto; background:white; padding:20px;
+      border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    }
+    input {
+      width:90%; padding:10px; margin:10px 0; border:1px solid #ccc; border-radius:8px;
+      font-size:16px;
+    }
+    button {
+      padding:10px 20px; background:#007bff; color:white; border:none;
+      border-radius:8px; font-size:16px; cursor:pointer;
+    }
+    button:hover { background:#0056b3; }
+    #output { margin-top:15px; font-size:18px; font-weight:bold; }
+  </style>
+</head>
+<body>
+
+  <h2>🧮 Math Equation Solver</h2>
+  <div class="solver-box">
+    <input id="equation" type="text" placeholder="Enter equation, e.g. 2*(3+4)^2 / sqrt(16)">
+    <br>
+    <button onclick="solveEquation()">Solve</button>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    function solveEquation() {
+      const input = document.getElementById("equation").value;
+      try {
+        const result = math.evaluate(input);
+        document.getElementById("output").innerText = "Result: " + result;
+      } catch (e) {
+        document.getElementById("output").innerText = "❌ Invalid equation!";
+      }
+    }
+  </script>
+
+</body>
+</html>
